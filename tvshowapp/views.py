@@ -1,56 +1,60 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .models import Book, Author
-import random
+from .models import Show
+import datetime
 
 
-def addauthor(request):
-    if request.method == 'POST':
-        Author.objects.create(
-            first_name=request.POST['first'], last_name=request.POST['last'], notes=request.POST['notes'])
+def listshows(request):
     context = {
-        "books": Book.objects.all(),
-        "authors": Author.objects.all()
+        "shows": Show.objects.all()
     }
-    return render(request, "addauthor.html", context)
+    return render(request, "shows.html", context)
 
 
-def addbook(request):
+def newshow(request):
     if request.method == 'POST':
-        Book.objects.create(
-            title=request.POST['title'], desc=request.POST['desc'])
-    context = {
-        "books": Book.objects.all(),
-        "authors": Author.objects.all()
-    }
-    return render(request, "addbook.html", context)
+        Show.objects.create(
+            title=request.POST['title'], network=request.POST['network'], release_date=request.POST['date'], desc=request.POST['desc'])
+    return render(request, "shownew.html")
 
 
-def author(request, authorid):
-    thisauthor = Author.objects.get(id=authorid)
+def newshowprocess(request):
     if request.method == 'POST':
-        booktoaddtodb = Book.objects.get(id=request.POST['booktoadd'])
-        thisauthor.books.add(booktoaddtodb)
+        Show.objects.create(title=request.POST['title'], network=request.POST['network'],
+                            release_date=request.POST['date'], desc=request.POST['desc'])
+    return redirect('../shows')
+
+
+def showdetail(request, showid):
     context = {
-        "authoredbooks": Author.objects.get(id=authorid).books.all(),
-        "author": Author.objects.get(id=authorid),
-        "otherbooks": Book.objects.exclude(authors=Author.objects.get(id=authorid))
-
+        "thisshow": Show.objects.get(id=showid)
     }
-    return render(request, "author.html", context)
+    return render(request, "showdetail.html", context)
 
 
-def book(request, bookid):
-    thisbook = Book.objects.get(id=bookid)
-
-    if request.method == 'POST':
-        authortoaddtodb = Author.objects.get(id=request.POST['authortoadd'])
-        thisbook.authors.add(authortoaddtodb)
+def showedit(request, showid):
+    date = Show.objects.get(id=showid).release_date
+    date = datetime.date.strftime( date, "%Y-%m-%d")
     context = {
-        "booksauthors": Book.objects.get(id=bookid).authors.all(),
-        "book": Book.objects.get(id=bookid),
-        "otherauthors": Author.objects.exclude(books=Book.objects.get(id=bookid))
+        "thisshow": Show.objects.get(id=showid),
+        "datesample" : date
     }
-    return render(request, "book.html", context)
+    return render(request, "showedit.html", context)
+
+
+def showeditprocess(request, showid):
+    thisshow = Show.objects.get(id=showid)
+    thisshow.title = request.POST['title']
+    thisshow.network = request.POST['network']
+    thisshow.release_date = request.POST['date']
+    thisshow.desc = request.POST['desc']
+    thisshow.save()
+    return redirect('../' + str(showid))
+
+
+def showdelete(request, showid):
+    thisshow = Show.objects.get(id=showid)
+    thisshow.delete()
+    return redirect('/TVShowLibrary/shows')
 
 def backtohome(request):
-    return redirect('/booksandauthors')
+    return redirect('./shows')

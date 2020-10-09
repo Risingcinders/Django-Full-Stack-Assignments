@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Books & Authors</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'shows/css/style.css' %}" />
+    </head>
+    <body>
+        <div id="wrapper">
+            <a href="../shows">Back to Show Listing</a>
+            <div id="activities">
+                <div>
+                    <h1>Add a Show</h1>
+                    <form
+                        action="./create"
+                        method="POST"
+                    >
+                        {% csrf_token %}
+                        <label>
+                            Title
+                            <input type="text" name="title" />
+                        </label>
+                        <br />
+                        <label>
+                            Network
+                            <input type="text" name="network" />
+                        </label>
+                        <label>
+                            Release Date
+                            <input type="date" name="date" />
+                        </label>
+                        <br />
+                        <label>
+                            Description
+                            <br />
+                            <textarea rows="3" cols="35" name="desc"></textarea>
+                        </label>
+                        <br />
+                        <button type="submit">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+    </body>
+</html>

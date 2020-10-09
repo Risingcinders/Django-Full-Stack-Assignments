@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Books & Authors</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'shows/css/style.css' %}" />
+    </head>
+    <body>
+        <div id="wrapper">
+            <a href="../shows">Back to Show Listing</a>
+            <div id="activities">
+                <h1>TV Show {{thisshow.id}}</h1>
+                <h3>{{thisshow.title}}</h3>
+                <h3>Network: {{thisshow.network}}</h3>
+                <h3>Release Date: {{thisshow.release_date}}</h3>
+                <h3>Description:</h3>
+                <p>{{thisshow.desc}}</p>
+            </div>
+            <a href="{{thisshow.id}}/edit">Edit</a>
+            <a href="{{thisshow.id}}/destroy">Delete</a>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+    </body>
+</html>

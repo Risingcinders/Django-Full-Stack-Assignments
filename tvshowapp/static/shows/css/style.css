@@ -39,7 +39,12 @@ div {
 
 #activities {
     height: 50%;
+    flex-direction: column;
     background-color: var(--secbackground);
+}
+
+#activities>* {
+    padding: 10px;
 }
 
 #activities div {
@@ -62,4 +67,25 @@ ul {
 
 input {
     margin: 5px;
+}
+
+table
+{
+    border-collapse: collapse;
+}
+
+td {
+    padding: 10px;
+}
+
+table tr:nth-child(even) {
+    background-color: var(--secondarytext);
+}
+
+th {
+    padding: 10px;
+}
+
+thead tr {
+    border-bottom: solid 2px #4b4b4b;
 }
