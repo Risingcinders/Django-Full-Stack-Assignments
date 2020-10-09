@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Books & Authors</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'books/css/style.css' %}" />
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="activities">
+                <div>
+                    <h1>Add a Book</h1>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <label>
+                            Title
+                            <input type="text" name="title" />
+                        </label>
+                        <br />
+                        <label>
+                            Description
+                            <br>
+                            <textarea rows="3" cols="35" name="desc"></textarea>
+                        </label>
+                        <br>
+                        <button type="submit">Add</button>
+                    </form>
+                </div>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in books %}
+                            <tr>
+                                <td>{{book.id}}</td>
+                                <td>{{book.title}}</td>
+                                <td><a href="books/{{book.id}}">View</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <p>I'm using this color scheme from now on.</p>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+    </body>
+</html>
